@@ -244,6 +244,9 @@
 			_scale = options.scale || 1;
 		}
 
+		//compensateScrolling is true by default
+		_compensateScrolling = options.compensateScrolling !== false;
+
 		_smoothScrollingEnabled = options.smoothScrolling !== false;
 
 		//Dummy object. Will be overwritten in the _render method when smooth scrolling is calculated.
@@ -489,7 +492,9 @@
 		}
 
 		//Compensate scrolling since getBoundingClientRect is relative to viewport.
-		absolute += _instance.getScrollTop();
+		if(_compensateScrolling) {
+			absolute += _instance.getScrollTop();
+		}
 
 		return (absolute + 0.5) | 0;
 	};
@@ -1450,6 +1455,8 @@
 
 	var _edgeStrategy;
 
+	//Composate scrolling options, default: true
+	var _compensateScrolling;
 
 	//Mobile specific vars. Will be stripped by UglifyJS when not in use.
 	var _isMobile = false;
